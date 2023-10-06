@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("location: login.php");
+}
+
 include("../source/musicTile.php");
 include("../source/connect.php");
 include("../source/search.php");
@@ -18,9 +23,11 @@ db_connect();
 </head>
 <body>
     <header>
+        <p style="color: white;">Welkom, <?php echo $_SESSION['username']; ?>!</p>
         <?php
             createLink();
         ?>
+        <a href="logout.php">Loguit</a>
     </header>
     <main>
         <div class="tile__div">
