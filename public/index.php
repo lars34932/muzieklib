@@ -4,12 +4,10 @@ if (!isset($_SESSION['username'])) {
     header("location: login.php");
 }
 
-include("../source/musicTile.php");
+include("../source/views/musicTile.php");
 include("../source/connect.php");
-include("../source/search.php");
+include("../source/views/search.php");
 db_connect();
-//show_info();
-//executeQuery("UPDATE data SET releaseDate = '2 December 2022' WHERE songName = 'too many nights'");
 ?>
 <!DOCTYPE html>
 <html lang="en">

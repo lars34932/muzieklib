@@ -1,6 +1,6 @@
 <?php
-include("../source/musicTile.php");
-include("../source/musicPage.php");
+include("../source/views/musicTile.php");
+include("../source/views/musicPage.php");
 db_connect();
 ?>
 <!DOCTYPE html>

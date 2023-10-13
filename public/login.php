@@ -3,7 +3,6 @@ session_start();
 ob_start();
 error_reporting(0);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Ambil data dari formulir
     $username = $_POST['username'];
     $password = $_POST['password'];
 
@@ -18,11 +17,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = $conn->query($query);
     
         if ($result->num_rows == 1) {
-            // Login berhasil
             $_SESSION['username'] = $username;
             header("location: index.php");
         } else {
-            // Login gagal, tampilkan pesan error
             $error = "Naam en(of) Wachtwoord verkeerd";
         }
     }

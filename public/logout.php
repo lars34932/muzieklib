@@ -1,6 +1,5 @@
 <?php
 session_start();
-session_destroy(); // Hapus semua sesi
+session_destroy();
 
 header("location: login.php");
-?>
