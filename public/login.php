@@ -1,27 +1,44 @@
 <?php
 session_start();
 ob_start();
-error_reporting(0);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    if(str_contains($password, "'") || str_contains($password, "#") || str_contains($password, "-")) {
+    // Check for invalid characters
+    if (strpos($password, "'") !== false || strpos($password, "#") !== false || strpos($password, "-") !== false) {
         echo "een van de characters is verboden";
-    } elseif(str_contains($username, "'") || str_contains($username, "#") || str_contains($username, "-")) {
+    } elseif (strpos($username, "'") !== false || strpos($username, "#") !== false || strpos($username, "-") !== false) {
         echo "een van de characters is verboden";
     } else {
-        $conn = new mysqli("mariadb", "db_user", "mijn_p@ss#", "voorbeeld_db");
-    
-        $query = "SELECT * FROM users WHERE Username = '$username' AND Pass = '$password'";
-        $result = $conn->query($query);
-    
+        // Database connection
+        $conn = new mysqli("127.0.0.1", "c8374User", "DatabasePass!", "c8374projects");
+
+        // Check for connection errors
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        // Use prepared statements to avoid SQL injection
+        $stmt = $conn->prepare("SELECT * FROM users WHERE Username = ? AND Pass = ?");
+        $stmt->bind_param("ss", $username, $password);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
         if ($result->num_rows == 1) {
             $_SESSION['username'] = $username;
             header("location: index.php");
+            exit;
         } else {
             $error = "Naam en(of) Wachtwoord verkeerd";
         }
+
+        $stmt->close();
+        $conn->close();
     }
 }
 ?>

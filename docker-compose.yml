@@ -42,6 +42,15 @@ services:
     volumes:
       - './docker/mysqldata:/var/lib/mysql'
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mariadb
+      PMA_USER: root
+      PMA_PASSWORD: 4dy5qwtrsag#!sad
+    ports:
+      - "1088:80"
+
 # Volumes
 volumes:
   mysqldata:
